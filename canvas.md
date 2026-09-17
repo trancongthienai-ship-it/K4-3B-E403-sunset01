@@ -1,0 +1,16 @@
+# Canvas 7 dòng (CP1) - Nhóm Track B2
+
+| # | Dòng | Nội dung |
+|---|---|---|
+| 1 | **Track + đề** | B2 · Trợ lý Discord — Tính năng mới cho TA: Cải tiến bản tin báo cáo câu hỏi tồn đọng cuối ngày |
+| 2 | **Job executor (ai · đang ở đâu · làm gì)** | Teaching Assistant (TA) vào cuối ngày, đang lướt Discord để rà soát lại xem có học viên nào bị bỏ sót hay cần hỗ trợ khẩn cấp không. |
+| 3 | **Pain một câu (ai – đang làm gì – vướng đâu – hậu quả)** | Khi rà soát cuối ngày, TA gặp khó vì các câu hỏi bị trôi trên nhiều kênh, bản tin bot hiện tại tóm tắt lan man, bị lỗi text và thiếu link trực tiếp đến câu hỏi, dẫn đến việc TA mất thời gian tìm kiếm hoặc bỏ sót người cần hỗ trợ, làm học viên nản/trễ deadline. |
+| 4 | **1–2 bằng chứng đầu (số + cách đếm + mã hội thoại, khảo sát)** | - **Lỗi bot hiện tại:** File `k4_daily_reports.md` hiển thị rõ lỗi bot chèn chữ rác ("nguồn tham chiếuhi", "nguồn tham chiếuhăn"), câu bị cắt cụt ("chưa được giải đá"), tóm tắt gom chung chung không có link đích danh.<br>- **Data thực tế trên Discord:** Qua kiểm tra 5 ảnh chụp màn hình (gồm 35 topic/câu hỏi), có **2/35 topic hoàn toàn không có ai trả lời** (VD: topic "hỏi đáp" bị tồn 19 giờ, "Xin hỗ trợ gia nhập nhóm..." bị tồn 3 ngày). Các câu hỏi này bị trôi lọt thỏm giữa hàng chục câu hỏi khác, rất dễ bị TA bỏ sót.<br>- Khảo sát 3 TA: 3/3 chỉ đọc lướt qua bản tin hiện tại do bot tóm tắt chung chung không có link bấm thẳng hoặc viết quá dài dòng. 100% đồng ý dùng thử bản tin mới có link. |
+| 5 | **Lát cắt MỘT CÂU (1 user · 1 việc · 1 quyết định AI · 1 kết quả)** | Một TA xem bản tin cuối ngày · muốn tìm câu hỏi chưa ai trả lời · AI quyết định lọc ra các câu hỏi tồn đọng (chưa có reply sau 4 giờ) và tóm tắt chúng · kết quả là một danh sách gọn gàng có gắn link trực tiếp để TA click vào trả lời. |
+| 6 | **AI tự làm đến đâu + 1 dòng lý do · ≥3 willing users** | **Tự làm:** Phân loại tin nhắn hỏi bài, check xem đã có ai trả lời chưa, tóm tắt ý chính và trích xuất link Discord.<br>**Không tự làm:** Không tự trả lời các câu hỏi tồn đọng này.<br>**Lý do:** Đây là các câu hỏi khó không ai (kể cả bot B1) trả lời được trong ngày, nếu AI tự đoán sẽ sai kiến thức, cần TA đích thân xem qua và trả lời bằng link.<br>**Willing users:** `moizdau@gmail.com`, `thunmt2004@gmail.com`, `congduan2554@gmail.com` |
+| 7 | **Phân công có tên** | `[Tên A]` — Khảo sát TA, phân tích data lỗi bot<br>`[Tên B]` — Thiết kế prompt phân loại & tóm tắt<br>`[Tên C]` — Code tích hợp model sinh báo cáo<br>`[Tên D]` — Làm Spec, review test cases<br>`[Tên E]` — Chịu trách nhiệm Demo và User test |
+
+> **Lưu ý cho nhóm:** 
+> - Các con số có chữ `XX` ở dòng 4 (số tin nhắn tồn, số người khảo sát) là chỗ nhóm cần đếm và điền số liệu thực tế. 
+> - Ở dòng 6, nhóm hãy ghi rõ tên 3 bạn (hoặc TA) ngoài nhóm đồng ý dùng thử.
+> - Dòng 7 hãy điền tên thật của các thành viên.
