@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunset · Bản tin cho TA</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <aside class="server-rail" aria-label="Máy chủ"><div class="server-home" title="Sunset">◒</div><div class="rail-divider"></div><div class="server-icon selected-server" title="AI Thực Chiến · Máy chủ hiện tại">K4</div><span class="rail-caption">SUNSET</span></aside>
+  <aside class="sidebar">
+    <div class="server-heading">AI Thực Chiến <span>⌄</span></div>
+    <div class="channel-scroll">
+    <div class="browse-label">☷ &nbsp; Duyệt các Kênh <span>MỚI</span></div>
+    <p class="nav-label">Kênh đề xuất</p>
+    <div class="reference-channel"># &nbsp; 🛬-chào-mừng</div>
+    <div class="reference-channel"># &nbsp; 3a-lec-d301</div>
+    <div class="reference-channel"># &nbsp; 3a-lab-e403</div>
+    <div class="reference-channel"># &nbsp; 3b-lec-d301</div>
+    <div class="channel-separator"></div>
+    <div class="reference-channel"># &nbsp; bắt-đầu-tại-đây</div>
+    <p class="nav-label">LỚP HỌC - KHÓA 4 ⌄</p>
+    <div class="reference-channel"># &nbsp; vlearn-support</div>
+    <div class="reference-channel"># &nbsp; vlearn-onboarding</div>
+    <div class="reference-channel"># &nbsp; vlearn-feature-requests</div>
+    <div class="reference-channel"># &nbsp; vlearn-updates</div>
+    <div class="reference-channel"># &nbsp; 📣-thông-báo-lớp-học</div>
+    <div class="reference-channel"># &nbsp; 3b-lab-e403</div>
+    <nav aria-label="Kênh bản tin"><button class="nav-item active" data-view="report"><span>#</span> daily-report <i>MỚI</i></button></nav>
+    <p class="channel-hint">Các kênh khác chỉ minh họa bố cục.</p>
+    </div>
+    <div class="profile"><span class="avatar">TA</span><div>Teaching Assistant<small>Nhóm Sunset · Track B2</small></div></div>
+  </aside>
+  <main>
+    <header class="topbar"><span class="channel-heading"><span class="header-hash">#</span> <strong id="breadcrumb">Bản tin cuối ngày</strong><span class="channel-topic">Trợ lý rà soát câu hỏi cho TA</span></span><span class="demo-badge">CP2 · MOCK</span></header>
+    <section class="page">
+      <div class="page-heading channel-welcome"><div><p class="eyebrow">THỨ NĂM, 17 THÁNG 9, 2026</p><h1 id="page-title">Bản tin cuối ngày<span>.</span></h1><p id="page-subtitle" class="subtitle">Những câu hỏi cần bạn, gói gọn trong một bản tin.</p></div><button id="generate" class="button primary">✦ Tạo lại bản tin</button></div>
+      <div class="mock-notice"><span>ⓘ</span><span><strong>Bản thử nghiệm tương tác.</strong> Dữ liệu minh họa, chưa kết nối Discord hoặc AI. Thời điểm giả lập: 20:00 · 17/09/2026.</span></div>
+        <div class="report-switch" role="group" aria-label="Chế độ bản tin"><button class="selected" data-view="report">📋 Bản tin hôm nay</button><button data-view="resolved">✓ Đã xử lý <b id="resolved-count">0</b></button><button data-view="guide">Hướng dẫn</button></div>
+      <div id="report-content">
+        <div class="date-divider"><span>17 tháng 9 năm 2026</span></div>
+        <div class="bot-author"><span class="bot-avatar">☀</span><div><strong>Trợ lý Sunset</strong> <span class="bot-label">✓ APP</span><time>Hôm nay lúc 20:00</time><p>Chào TA 👋 Đây là những câu hỏi cần bạn chú ý hôm nay.</p></div></div>
+
+        <div class="stats"><article><span>Câu hỏi đang chờ</span><strong id="pending-stat">4</strong><small>Chưa có câu trả lời hữu ích</small></article><article><span>Đã chờ trên 4 giờ</span><strong id="overdue-stat" class="orange">3</strong><small>Ưu tiên trong bản tin hôm nay</small></article><article><span>Cần kiểm tra thêm</span><strong id="uncertain-stat">1</strong><small>Chưa đủ ngữ cảnh để kết luận</small></article><article><span>Đã xử lý</span><strong id="done-stat" class="green">0</strong><small>Do TA xác nhận trong phiên này</small></article></div>
+        <div class="report-layout"><section class="list-panel"><div class="panel-heading"><div><h2 id="list-title">Câu hỏi cần chú ý</h2><p id="list-caption">Ưu tiên câu hỏi chờ lâu nhất.</p></div><span class="live-label">DỮ LIỆU MẪU</span></div>
+          <div class="toolbar"><div class="tabs" role="group" aria-label="Lọc trạng thái"><button data-filter="overdue" class="selected">Trên 4 giờ</button><button data-filter="all">Tất cả</button><button data-filter="uncertain">Cần kiểm tra</button></div><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Tìm câu hỏi, kênh…" aria-label="Tìm câu hỏi hoặc kênh"></label></div>
+          <div id="question-list" aria-live="polite"></div>
+        </section><aside class="insights"><div class="insight-icon">✦</div><p class="eyebrow">GÓC NHÌN CUỐI NGÀY</p><h2>Ít tìm kiếm hơn.<br>Hỗ trợ đúng chỗ hơn.</h2><p>Bản tin gom những câu hỏi có dấu hiệu bị bỏ sót để bạn kiểm tra và quyết định hỗ trợ.</p><div class="rule"><span>01</span><div><strong>Ưu tiên thời gian chờ</strong><p>Câu hỏi quá 4 giờ được đưa lên bản tin.</p></div></div><div class="rule"><span>02</span><div><strong>Kiểm tra trước khi kết luận</strong><p>Phản hồi của bot hoặc lời hỏi thêm chưa chắc là đáp án.</p></div></div><div class="rule"><span>03</span><div><strong>Bạn là người quyết định</strong><p>Xem hội thoại rồi xác nhận đã xử lý.</p></div></div><div class="insight-foot">Không tự trả lời hoặc gửi tin cho học viên.</div></aside></div>
+      </div>
+      <section id="guide-content" class="guide-panel" hidden><p class="eyebrow">DEMO TRONG 1 PHÚT</p><h2>Một vòng rà soát cuối ngày</h2><ol><li>Chọn <strong>Tạo lại bản tin</strong> để xem trạng thái đang tổng hợp giả lập.</li><li>Dùng bộ lọc <strong>Trên 4 giờ</strong> hoặc <strong>Cần kiểm tra</strong>.</li><li>Chọn <strong>Xem chi tiết</strong>, đọc lý do và hội thoại gốc giả lập.</li><li>Chọn <strong>Đánh dấu đã xử lý</strong>. Câu hỏi chuyển sang mục Đã xử lý.</li><li>Có thể mở lại câu hỏi bằng nút <strong>Đưa về đang chờ</strong>.</li></ol><p>Đây là mock CP2: không gọi AI, không truy cập Discord, không gửi tin nhắn. Tải lại trang sẽ đặt lại toàn bộ dữ liệu.</p></section>
+      <footer>Sunset / Track B2 <span>Được thiết kế để không bỏ sót một câu hỏi nào.</span><button id="reset">Đặt lại demo</button></footer>
+    </section>
+    <div class="composer"><span aria-hidden="true">＋</span><input aria-label="Kênh chỉ đọc trong bản mock" placeholder="Nhắn #daily-report — kênh chỉ đọc trong bản mock" disabled><span aria-hidden="true">＋</span></div>
+  </main>
+  <dialog id="detail-dialog"><div class="dialog-top"><span class="eyebrow">CHI TIẾT CÂU HỎI</span><button id="close-dialog" class="icon-button" aria-label="Đóng">✕</button></div><div id="detail-content"></div></dialog>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>
