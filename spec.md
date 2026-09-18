@@ -88,3 +88,6 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 |---|---|---|
 | 18/09/2026 | Tạo bản draft spec.md đầu tiên | Nộp CP4 |
 | 18/09/2026 | Áp dụng Few-shot learning vào CP3 | Fix lỗi AI bắt nhầm câu tán gẫu thành câu hỏi (ID 1, ID 13) |
+| 18/09/2026 | Bổ sung hướng dẫn cách feedback cho bot vào đầu bản tin báo cáo. | TA `thunmt2004@gmail.com` không biết cách feedback (react ❌) khi bot nhận diện nhầm câu hỏi. |
+| 18/09/2026 | Giữ nguyên việc AI tóm tắt ngắn các đoạn code dài, ghi chú thêm cảnh báo cho TA. | Tiết kiệm token API và tránh vỡ layout. Sẽ khắc phục bằng cách TA tự click link đọc trực tiếp (theo feedback của `moizdau@gmail.com`). |
+| 18/09/2026 | Thêm vào backlog ý tưởng: Phân loại câu hỏi theo tag chuyên môn (ví dụ: #React, #Python). | Giúp quản lý dễ chia việc cho TA chuyên môn (theo feedback của `admin_manager@gmail.com`). |
