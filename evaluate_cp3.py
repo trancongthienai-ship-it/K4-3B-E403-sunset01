@@ -59,7 +59,7 @@ def main():
     # 2. Đọc file dữ liệu Golden Set
     print("Đang nạp dữ liệu Golden Set...")
     try:
-        with open('golden_set.json', 'r', encoding='utf-8') as f:
+        with open('eval/golden_set.json', 'r', encoding='utf-8') as f:
             golden_set = json.load(f)
     except FileNotFoundError:
         print("❌ Lỗi: Không tìm thấy file golden_set.json!")

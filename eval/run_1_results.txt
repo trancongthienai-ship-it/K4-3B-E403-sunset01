@@ -1,0 +1,33 @@
+Đang nạp dữ liệu Golden Set...
+=====================================================================================
+🚀 BẮT ĐẦU CHẠY ĐÁNH GIÁ (CP3) VỚI OPENAI GPT-4O-MINI
+=====================================================================================
+ID   | Expected   | AI Predict | Result | Summary
+-------------------------------------------------------------------------------------
+1    | False      | False      | ✅ Pass | 
+2    | False      | False      | ✅ Pass | 
+3    | True       | True       | ✅ Pass | Cần hỗ trợ về vấn đề giấy tờ gấp...
+4    | True       | True       | ✅ Pass | Hỏi cách setup Github Copilot và...
+5    | False      | False      | ✅ Pass | 
+6    | True       | True       | ✅ Pass | Xin hỗ trợ gia nhập nhóm sau hạn...
+7    | True       | True       | ✅ Pass | Hỏi về vị trí file record buổi 1
+8    | False      | False      | ✅ Pass | 
+9    | True       | True       | ✅ Pass | Hỏi về cách làm câu 3 bài tập về...
+10   | False      | False      | ✅ Pass | 
+11   | True       | True       | ✅ Pass | Lỗi 'module not found' khi chạy ...
+12   | False      | False      | ✅ Pass | 
+13   | False      | False      | ✅ Pass | 
+14   | True       | True       | ✅ Pass | Hỏi về link nộp bài CP1
+15   | False      | False      | ✅ Pass | 
+16   | True       | True       | ✅ Pass | Hỏi về việc có học bù vào thứ 7 ...
+17   | False      | False      | ✅ Pass | 
+18   | True       | True       | ✅ Pass | Hỏi về việc kiểm tra điểm chuyên...
+19   | False      | False      | ✅ Pass | 
+20   | True       | True       | ✅ Pass | Hỏi về việc nộp muộn do cúp điện...
+=====================================================================================
+📊 KẾT QUẢ ĐÁNH GIÁ LƯỢT 1
+- Tổng số ca test : 20
+- Số ca AI đúng  : 20
+- Tỷ lệ chính xác : 100.0%
+=====================================================================================
+Xong! Bạn hãy quay video lại màn hình này để nộp CP3 nhé.
