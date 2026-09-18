@@ -1,18 +1,19 @@
 const initialQuestions = [
-  { id: 1, channel: 'hỗ-trợ-học-tập', title: 'Không chạy được notebook sau khi cài thư viện', summary: 'Học viên gặp lỗi import khi chạy bài thực hành và cần hướng dẫn kiểm tra môi trường.', hours: 19, user: 'Học viên mẫu 01', uncertain: false, reason: 'Câu hỏi đã chờ 19 giờ. Trong hội thoại mẫu chưa ghi nhận phản hồi nào.', messages: [['Học viên mẫu 01', 'Em đã cài thư viện theo hướng dẫn nhưng chạy notebook vẫn báo ModuleNotFoundError. Em nên kiểm tra phần nào ạ?']] },
-  { id: 2, channel: 'hỏi-đáp-lab', title: 'Chưa rõ cách nộp bài khi đường dẫn repo bị lỗi', summary: 'Học viên cần xác nhận cách nộp bài hợp lệ. Bot mới xác nhận đã nhận câu hỏi.', hours: 7, user: 'Học viên mẫu 02', uncertain: false, reason: 'Đã chờ 7 giờ. Tin nhắn của bot chỉ là xác nhận tiếp nhận, chưa giải đáp câu hỏi.', messages: [['Học viên mẫu 02', 'Link repo của em đang không mở được từ form. Em cần sửa quyền repo hay gửi lại bằng cách nào ạ?'], ['Bot mẫu', 'Mình đã nhận câu hỏi của bạn. Vui lòng chờ TA hỗ trợ.']] },
-  { id: 3, channel: 'thảo-luận', title: 'Câu hỏi về chia dữ liệu có thể đã được trả lời ở kênh khác', summary: 'Có người dẫn sang một cuộc thảo luận khác, nhưng chưa đủ ngữ cảnh để xác nhận đã giải đáp.', hours: 5, user: 'Học viên mẫu 03', uncertain: true, reason: 'Đã chờ 5 giờ. Có nhắc đến câu trả lời ở kênh khác nhưng dữ liệu mẫu không chứa hội thoại đó. Cần TA kiểm tra, chưa kết luận là chưa được giải đáp.', messages: [['Học viên mẫu 03', 'Em chia train/test trước hay sau khi chuẩn hóa dữ liệu ạ?'], ['Học viên mẫu 04', 'Hình như câu này được trả lời bên kênh lab rồi, bạn xem thử nhé.']] },
-  { id: 4, channel: 'hỏi-đáp-lab', title: 'Cần ví dụ để phân biệt precision và recall', summary: 'Học viên muốn hiểu hai chỉ số qua ví dụ phân loại thư rác. Câu hỏi mới, chưa vượt ngưỡng 4 giờ.', hours: 2, user: 'Học viên mẫu 05', uncertain: false, reason: 'Mới chờ 2 giờ, chưa vượt ngưỡng 4 giờ nên không xuất hiện trong bộ lọc mặc định.', messages: [['Học viên mẫu 05', 'Anh chị có thể giải thích precision và recall bằng ví dụ lọc thư rác được không ạ?']] }
+  { id: 3, channel: 'hỗ-trợ-chung', title: 'Hỗ trợ giấy tờ gấp', summary: 'Học viên đang gặp vấn đề gấp liên quan đến giấy tờ cần giải quyết.', hours: 15, user: 'Học viên 03', uncertain: false, reason: 'Học viên đang gặp vấn đề gấp cần TA/BTC hỗ trợ.', messages: [['Học viên 03', 'Em đang cần hỗ trợ về vấn đề giấy tờ gấp thì em liên lạc đến bộ phận nào ạ']] },
+  { id: 4, channel: 'hỏi-đáp-kỹ-thuật', title: 'Lỗi setup Github Copilot', summary: 'Lỗi connection timeout khi cài đặt Github Copilot.', hours: 10, user: 'Học viên 04', uncertain: false, reason: 'Học viên gặp lỗi kỹ thuật cần hướng dẫn.', messages: [['Học viên 04', 'Mọi người cho em hỏi làm sao để setup cái Github Copilot ạ, nó cứ báo lỗi connection timeout']] },
+  { id: 6, channel: 'hỗ-trợ-chung', title: 'Xin gia nhập nhóm sau hạn', summary: 'Học viên xin gia nhập nhóm do ốm mấy ngày qua.', hours: 25, user: 'Học viên 06', uncertain: false, reason: 'Yêu cầu hỗ trợ đặc biệt cần BTC giải quyết.', messages: [['Học viên 06', 'Xin hỗ trợ gia nhập nhóm sau hạn đăng ký vì em bị ốm mấy ngày qua']] },
+  { id: 7, channel: 'hỗ-trợ-học-tập', title: 'Tìm file record buổi 1', summary: 'Hỏi về link record bài giảng.', hours: 8, user: 'Học viên 07', uncertain: false, reason: 'Câu hỏi tìm kiếm tài liệu.', messages: [['Học viên 07', 'Cho em hỏi file record buổi 1 nằm ở đâu vậy ạ?']] },
+  { id: 9, channel: 'hỏi-đáp-lab', title: 'Hỏi bài tập phân tích dữ liệu', summary: 'Hỏi cách làm câu 3 bài tập về nhà.', hours: 5, user: 'Học viên 09', uncertain: false, reason: 'Hỏi bài tập, cần TA vào hướng dẫn.', messages: [['Học viên 09', 'Lab coach ơi cho em hỏi câu 3 bài tập về nhà phần phân tích dữ liệu làm sao ạ?']] },
+  { id: 11, channel: 'hỏi-đáp-kỹ-thuật', title: "Lỗi 'module not found'", summary: 'Lỗi khi chạy lệnh npm start.', hours: 2, user: 'Học viên 11', uncertain: false, reason: 'Hỏi lỗi code.', messages: [['Học viên 11', "Lỗi 'module not found' khi chạy npm start, có ai biết fix không ạ?"]] },
+  { id: 14, channel: 'thông-báo-chung', title: 'Link nộp bài CP1', summary: 'Hỏi về form nộp bài.', hours: 4, user: 'Học viên 14', uncertain: true, reason: 'Hỏi thông tin quan trọng từ BTC.', messages: [['Học viên 14', 'Link nộp bài CP1 ở đâu vậy BTC?']] },
+  { id: 16, channel: 'hỗ-trợ-học-tập', title: 'Lịch học bù thứ 7', summary: 'Hỏi lịch học cuối tuần.', hours: 6, user: 'Học viên 16', uncertain: true, reason: 'Hỏi lịch học.', messages: [['Học viên 16', 'Mọi người ơi cho hỏi thứ 7 này có học bù không ạ?']] },
+  { id: 18, channel: 'hỗ-trợ-chung', title: 'Kiểm tra điểm chuyên cần', summary: 'Học viên thắc mắc về điểm danh tuần trước.', hours: 12, user: 'Học viên 18', uncertain: false, reason: 'Hỏi về điểm số.', messages: [['Học viên 18', 'Làm sao để biết mình đã được chấm điểm chuyên cần tuần trước hay chưa ạ?']] },
+  { id: 20, channel: 'hỗ-trợ-chung', title: 'Hỏi chính sách nộp muộn', summary: 'Học viên hỏi bị trừ điểm không khi nộp muộn do cúp điện.', hours: 1, user: 'Học viên 20', uncertain: false, reason: 'Hỏi chính sách, cần BTC trả lời.', messages: [['Học viên 20', 'Cho e hỏi nộp muộn deadline 1 tiếng do cúp điện có bị trừ điểm ko ạ?']] }
 ];
 // Explicit fixture groups: no AI clustering in the CP2 mock.
 initialQuestions.forEach(q => {
   q.sources = [{ id: q.id + '-1', userId: q.user, user: q.user, channel: q.channel, hours: q.hours, messages: q.messages }];
 });
-initialQuestions[0].sources.push(
-  { id: '1-2', userId: 'sample-06', user: 'Học viên mẫu 06', channel: '3b-lab-e403', hours: 8, messages: [['Học viên mẫu 06', 'Em cài pandas rồi mà notebook vẫn báo không tìm thấy module pandas. Cần chọn lại môi trường ở đâu ạ?']] },
-  { id: '1-3', userId: 'sample-07', user: 'Học viên mẫu 07', channel: 'hỏi-đáp-lab', hours: 6, messages: [['Học viên mẫu 07', 'Notebook báo ModuleNotFoundError dù pip install thành công. Em cần kiểm tra kernel thế nào?']] },
-  { id: '1-4', userId: 'sample-06', user: 'Học viên mẫu 06', channel: '3b-lab-e403', hours: 5, messages: [['Học viên mẫu 06', 'Em hỏi lại lỗi pandas phía trên, notebook của em vẫn chưa import được ạ.']] }
-);
 const freshQuestions = () => initialQuestions.map(q => ({ ...q, done: false, sources: q.sources.map(source => ({ ...source, done: false, replies: [], draft: '', expanded: false })) }));
 const peopleCount = q => new Set(q.sources.map(source => source.userId)).size;
 let questions = freshQuestions();
@@ -21,7 +22,7 @@ let currentFilter = 'overdue';
 let toastTimer;
 let generating = false;
 const $ = selector => document.querySelector(selector);
-const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 function toast(message) {
   clearTimeout(toastTimer);
@@ -40,10 +41,10 @@ function render() {
   $('#resolved-count').textContent = done.length;
   document.querySelectorAll('[data-view]').forEach(button => button.classList.toggle('active', button.dataset.view === currentView));
   document.querySelectorAll('[data-filter]').forEach(button => button.classList.toggle('selected', button.dataset.filter === currentFilter));
-  const titles = {report:'Bản tin cuối ngày', resolved:'Câu hỏi đã xử lý', guide:'Hướng dẫn sử dụng'};
+  const titles = { report: 'Bản tin cuối ngày', resolved: 'Câu hỏi đã xử lý', guide: 'Hướng dẫn sử dụng' };
   $('#breadcrumb').textContent = 'daily-report';
   $('#page-title').innerHTML = `${titles[currentView]}<span>.</span>`;
-  $('#page-subtitle').textContent = {report:'Những câu hỏi cần bạn, gói gọn trong một bản tin.', resolved:'Những câu hỏi bạn đã kiểm tra và xác nhận xử lý.', guide:'Đi từ bản tin đến câu hỏi cần hỗ trợ, trong vài thao tác.'}[currentView];
+  $('#page-subtitle').textContent = { report: 'Những câu hỏi cần bạn, gói gọn trong một bản tin.', resolved: 'Những câu hỏi bạn đã kiểm tra và xác nhận xử lý.', guide: 'Đi từ bản tin đến câu hỏi cần hỗ trợ, trong vài thao tác.' }[currentView];
   $('#report-content').hidden = currentView === 'guide';
   $('#guide-content').hidden = currentView !== 'guide';
   $('#generate').hidden = currentView !== 'report';
@@ -54,7 +55,7 @@ function render() {
   const filtered = questions.filter(q => (currentView === 'resolved' ? q.done : !q.done))
     .filter(q => currentView === 'resolved' || currentFilter === 'all' || (currentFilter === 'overdue' ? q.hours > 4 : q.uncertain))
     .filter(q => `${q.title} ${q.channel} ${q.summary} ${q.sources.map(source => source.channel + ' ' + source.user + ' ' + source.messages.map(message => message[1]).join(' ')).join(' ')}`.toLocaleLowerCase('vi').includes(term))
-    .sort((a,b) => b.hours - a.hours);
+    .sort((a, b) => b.hours - a.hours);
   $('#question-list').innerHTML = filtered.length ? filtered.map(q => `<article class="question"><div class="question-meta"><span class="channel"># ${escapeHtml(q.channel)}</span><span class="tag ${q.done ? 'done' : ''}">${q.done ? '✓ Đã xử lý' : `◷ Chờ ${q.hours} giờ`}</span>${q.uncertain && !q.done ? '<span class="tag uncertain">Cần kiểm tra</span>' : ''}</div><h3>${escapeHtml(q.title)}</h3><p>${escapeHtml(q.summary)}</p><div class="question-bottom"><span class="student"><span class="student-icon">HV</span>${peopleCount(q)} người hỏi · ${q.sources.length} tin nhắn · ${q.sources.filter(source => !source.done).length} chưa xử lý</span><button class="text-button" data-detail="${q.id}">Xem chi tiết <span aria-hidden="true">↗</span></button></div></article>`).join('') : `<div class="empty"><strong>${term ? 'Không tìm thấy câu hỏi' : currentView === 'resolved' ? 'Chưa có câu hỏi đã xử lý' : 'Không còn câu hỏi trong bộ lọc này'}</strong>${term ? 'Thử từ khóa khác hoặc xóa nội dung tìm kiếm.' : currentView === 'resolved' ? 'Câu hỏi bạn đánh dấu đã xử lý sẽ xuất hiện ở đây.' : 'Bạn có thể chọn Tất cả để kiểm tra những câu hỏi khác.'}</div>`;
 }
 
@@ -148,4 +149,52 @@ $('#reset').addEventListener('click', () => {
   render();
   toast('Đã đặt lại dữ liệu demo.');
 });
+
+const mockForm = $('#mock-question-form');
+if (mockForm) {
+  mockForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const input = $('#mock-question-input');
+    const text = input.value.trim();
+    if (!text) return;
+    
+    const newId = Date.now();
+    const newQ = {
+      id: newId,
+      channel: 'tạo-thủ-công',
+      title: 'Câu hỏi giả lập mới',
+      summary: text.length > 50 ? text.substring(0, 50) + '...' : text,
+      hours: 1, // Set to 1 hour so it shows up in the pending list
+      user: 'Khách',
+      uncertain: false,
+      reason: 'Được tạo thủ công từ giao diện giả lập.',
+      messages: [['Khách', text]],
+      done: false
+    };
+    
+    newQ.sources = [{ 
+      id: newId + '-1', 
+      userId: newQ.user, 
+      user: newQ.user, 
+      channel: newQ.channel, 
+      hours: newQ.hours, 
+      messages: newQ.messages, 
+      done: false, 
+      replies: [], 
+      draft: '', 
+      expanded: false 
+    }];
+    
+    questions.unshift(newQ);
+    input.value = '';
+    
+    // Switch to report view and "all" filter to make sure the user sees it
+    currentView = 'report';
+    currentFilter = 'all';
+    
+    render();
+    toast('Đã thêm câu hỏi giả lập vào hệ thống!');
+  });
+}
+
 render();
