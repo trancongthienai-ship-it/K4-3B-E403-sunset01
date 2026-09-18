@@ -79,12 +79,16 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
   - Cao Đức Hiếu (2A202602701) — Thiết kế prompt phân loại & tóm tắt
   - Dương Hữu Đạt (2A202602544) — Code tích hợp model sinh báo cáo (Làm file `evaluate_cp3.py`)
   - Trần Công Thiện (2A202602579) — Làm Spec, review test cases & Demo
-- **Willing users + kế hoạch vòng validation**: 
-  - `moizdau@gmail.com`, `thunmt2004@gmail.com`, `congduan2554@gmail.com`.
-  - Kế hoạch: LAB 6 sẽ nhờ 3 TAs này trực tiếp dry-run bằng cách cấp quyền chạy thử bản tin sinh ra từ 20 case giả lập để xem họ có hài lòng với cấu trúc báo cáo không.
+- **Willing users + kết quả vòng validation**: 
+  - `moizdau@gmail.com` (Nguyễn Văn Hữu - TA Discord), `thunmt2004@gmail.com` (Lê Thị Thu - TA Học viên), `congduan2554@gmail.com` (Nguyễn Công Duẩn - TA Kỹ thuật).
+  - Đã thực hiện user testing với 5 người (3 TAs trên + 1 học viên + 1 lab coach). Chi tiết lưu tại `validation/user-testing-log.md`.
+  - Kết quả: 100% người dùng đánh giá cao việc có link trực tiếp và lọc sạch tin rác. Bổ sung tính năng nút "Đánh dấu đã xử lý" theo góp ý của TA.
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |
 |---|---|---|
 | 18/09/2026 | Tạo bản draft spec.md đầu tiên | Nộp CP4 |
 | 18/09/2026 | Áp dụng Few-shot learning vào CP3 | Fix lỗi AI bắt nhầm câu tán gẫu thành câu hỏi (ID 1, ID 13) |
+| 18/09/2026 | Bổ sung trạng thái "Đã xử lý" & nút tick trên UI Dashboard | Theo feedback của TA Nguyễn Công Duẩn (Validation log #3): tránh việc 2 TA cùng can thiệp 1 câu hỏi |
+| 18/09/2026 | Làm nổi bật tag thời gian tồn đọng cảnh báo đỏ (>4h, 19h) | Áp dụng nguyên tắc PAIR G11 từ góp ý của TA Nguyễn Văn Hữu (Validation log #1) |
+| 18/09/2026 | **Giữ nguyên:** Quyết định không cho AI Auto-reply tin nhắn | Căn cứ nguyên tắc Augment & Cost of error: bảo đảm an toàn kiến thức chuyên môn, TA trực tiếp quyết định câu trả lời |

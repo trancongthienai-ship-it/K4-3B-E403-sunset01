@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide Thuyết Trình CP5 - AI TA Dashboard (Nhóm K4-3B)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --bg-card: rgba(18, 26, 43, 0.85);
+      --bg-card-hover: rgba(28, 40, 65, 0.9);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(56, 189, 248, 0.35);
+      --primary: #38bdf8;
+      --primary-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Top Floating Toolbar (Hidden when printing) */
+    .toolbar {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-card);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .toolbar-info {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .btn-tool {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tool:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-tool.primary {
+      background: var(--primary-gradient);
+      color: #04101e;
+      border: none;
+      font-weight: 700;
+    }
+
+    /* Container for all slides */
+    .presentation-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Individual 16:9 Slide */
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+                  radial-gradient(circle at 15% 85%, rgba(129, 140, 248, 0.06) 0%, transparent 40%),
+                  var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px 80px;
+      box-sizing: border-box;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Subtle background grid */
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .meta-badges {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .badge-track {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .badge-time {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .slide-title-group h1 {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 30%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .slide-title-group p {
+      font-size: 20px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .slide-number-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .slide-num {
+      font-size: 48px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255, 255, 255, 0.15);
+      line-height: 1;
+    }
+
+    .rule-pill {
+      font-size: 12px;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    /* Slide Body Content */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 32px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      height: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      height: 100%;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.4);
+      position: relative;
+      backdrop-filter: blur(16px);
+    }
+
+    .card.highlight {
+      border-color: var(--border-highlight);
+      background: linear-gradient(145deg, rgba(24, 38, 64, 0.95) 0%, rgba(14, 22, 38, 0.9) 100%);
+      box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.15);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card-title .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .icon-blue { background: rgba(56, 189, 248, 0.15); color: var(--primary); }
+    .icon-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+    .icon-rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); }
+    .icon-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+    .icon-purple { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); }
+
+    /* Stat Highlight Boxes */
+    .stat-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .stat-number {
+      font-size: 42px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .stat-number.rose { color: var(--accent-rose); }
+    .stat-number.green { color: var(--accent-green); }
+    .stat-number.amber { color: var(--accent-amber); }
+
+    .stat-desc {
+      font-size: 16px;
+      color: var(--text-main);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .stat-source {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Comparison Table */
+    .table-custom {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+
+    .table-custom th {
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0 18px 10px;
+    }
+
+    .table-custom td {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 18px;
+      font-size: 16px;
+      color: var(--text-main);
+      vertical-align: middle;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .table-custom tr td:first-child {
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      font-weight: 700;
+    }
+
+    .table-custom tr td:last-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+
+    .table-custom tr.winner td {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .table-custom tr.winner td:first-child {
+      color: var(--primary);
+    }
+
+    /* Quotes */
+    .quote-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 18px;
+    }
+
+    .quote-text {
+      font-size: 18px;
+      font-style: italic;
+      color: #e2e8f0;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .quote-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .quote-role {
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    /* Code & Log Blocks */
+    .code-box {
+      background: #040810;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #38bdf8;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 20px;
+      font-size: 14px;
+      color: var(--text-dim);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .team-badge {
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Print Styles: Strict 1920x1080 without headers/footers */
+    @media print {
+      @page {
+        size: 1920px 1080px;
+        margin: 0;
+      }
+      body {
+        background-color: var(--bg-dark) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print, .toolbar {
+        display: none !important;
+      }
+      .slide {
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+        width: 1920px !important;
+        height: 1080px !important;
+        max-height: 1080px !important;
+        margin: 0 !important;
+        border: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Presentation Toolbar -->
+  <div class="toolbar no-print">
+    <span class="toolbar-info" id="slide-indicator">Slide 1 / 6</span>
+    <button class="btn-tool" onclick="prevSlide()">◀ Trước</button>
+    <button class="btn-tool" onclick="nextSlide()">Sau ▶</button>
+    <button class="btn-tool" onclick="toggleFullScreen()">⛶ Toàn màn hình</button>
+    <button class="btn-tool primary" onclick="window.print()">🖨 Xuất PDF (CP5)</button>
+  </div>
+
+  <div class="presentation-container">
+
+    <!-- ================= SLIDE 1: USER & JOB ================= -->
+    <div class="slide" id="slide-1">
+      <div class="slide-header">
+        <div>
+          <div class="meta-badges">
+            <span class="badge-track">Zone B2 · Track B · AI TA Dashboard</span>
+            <span class="badge-time">45 GIÂY</span>
+          </div>
+          <div class="slide-title-group">
+            <h1>User & Job: Rà Soát Câu Hỏi Cuối Ngày</h1>
+            <p>Trợ lý tổng hợp và cảnh báo câu hỏi tồn đọng cho Teaching Assistant (TA)</p>
+          </div>
+        </div>
+        <div class="slide-number-box">
+          <span class="slide-num">01</span>
+          <span class="rule-pill">✓ Bằng chứng kiểm chứng được</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Col 1: Context & JTBD -->
+          <div class="card">
+            <div class="card-title">
+              <span class="icon icon-blue">👤</span>
+              Job Executor & Core JTBD
+            </div>
+            
+            <div style="margin-bottom: 24px;">
+              <h4 style="color: var(--primary); font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Job Executor</h4>
+              <p style="font-size: 18px; line-height: 1.5; color: #e2e8f0;">
+                <strong>Teaching Assistant (TA)</strong> vào cuối ngày (22:00 – 23:30), đang lướt Discord để rà soát toàn bộ các kênh chat xem có học viên nào bị bỏ sót câu hỏi kỹ thuật hay cần hỗ trợ khẩn cấp trước deadline không.
+              </p>
+            </div>
+
+            <div>
+              <h4 style="color: var(--primary); font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Core JTBD (Một câu)</h4>
+              <p style="font-size: 18px; line-height: 1.5; color: #e2e8f0; background: rgba(56, 189, 248, 0.08); padding: 16px; border-radius: 12px; border-left: 4px solid var(--primary);">
+                "Khi rà soát cuối ngày, tôi muốn có ngay danh sách các câu hỏi chưa được giải đáp kèm link bấm thẳng, để kịp thời gỡ rối cho học viên mà không mất công dò tìm thủ công qua hàng trăm tin nhắn."
+              </p>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); font-size: 15px; color: var(--text-dim);">
+              <strong>Nhóm thực hiện (K4-3B):</strong> Trần Thanh Thái (TA/Data) · Cao Đức Hiếu (Prompt) · Dương Hữu Đạt (Code) · Trần Công Thiện (Spec/Demo)
+            </div>
+          </div>
+
+          <!-- Col 2: Evidence & Pain Point Numbers -->
+          <div class="card highlight">
+            <div class="card-title">
+              <span class="icon icon-rose">⚠️</span>
+              Con Số Nỗi Đau Thực Tế (Audited Evidence)
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-number rose">2/35</div>
+              <div>
+                <div class="stat-desc"><strong>Topic bị bỏ sót 100% không ai trả lời</strong> (1 topic tồn 19 giờ, 1 topic xin vào nhóm tồn 3 ngày).</div>
+                <div class="stat-source">Nguồn: Audit thực tế qua 5 ảnh chụp màn hình kênh hỏi đáp Discord K4</div>
+              </div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-number amber">3/3</div>
+              <div>
+                <div class="stat-desc"><strong>TA (100%) chỉ đọc lướt bot hiện tại</strong> do text rác ("nguồn tham chiếuhi", "chưa được giải đá") và không có link bấm thẳng.</div>
+                <div class="stat-source">Nguồn: Khảo sát phỏng vấn sâu 3 TAs + file k4_daily_reports.md</div>
+              </div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-number green">15-20'</div>
+              <div>
+                <div class="stat-desc"><strong>Thời gian TA phải cuộn tìm thủ công</strong> mỗi tối qua nhiều kênh, dễ gây kiệt sức và quá tải rà soát.</div>
+                <div class="stat-source">Nguồn: Đo lường thời gian thực tế của TA phiên trực 17/9</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span class="team-badge">K4-3B-E403-sunset01</span>
+          <span>•</span>
+          <span>Track B: Trợ lý Học viên</span>
+        </div>
+        <div class="footer-right">
+          <span>02-guide.md §5.1 Compliant</span>
+          <span>•</span>
+          <span>1/6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SLIDE 2: IMPACT & WHY ================= -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div>
+          <div class="meta-badges">
+            <span class="badge-track">Zone B2 · Đánh Đổi Thiết Kế</span>
+            <span class="badge-time">45 GIÂY</span>
+          </div>
+          <div class="slide-title-group">
+            <h1>Vì Sao Chọn Tính Năng Này: Bảng Impact 3 Ứng Viên</h1>
+            <p>Giải bài toán cân bằng giữa Mức độ Tự động hóa, Chi phí Token và Rủi ro Hallucination</p>
+          </div>
+        </div>
+        <div class="slide-number-box">
+          <span class="slide-num">02</span>
+          <span class="rule-pill">✓ Tránh tư duy 1 ý tưởng</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Ứng viên giải pháp</th>
+              <th style="width: 28%;">Cơ chế hoạt động</th>
+              <th style="width: 32%;">Impact vs Rủi ro (Cost of Error)</th>
+              <th style="width: 18%;">Quyết định & Lý do</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span style="color: var(--accent-rose);">Ứng viên 1</span><br>
+                AI Auto-reply Toàn Bộ
+              </td>
+              <td>AI tự động viết phản hồi trả lời tất cả các câu hỏi tồn đọng trên Discord mà không cần TA can thiệp.</td>
+              <td>
+                <strong style="color: var(--accent-rose);">Rủi ro cực cao (High Hallucination):</strong> Nếu AI trả lời sai kiến thức lập trình hoặc quy chế khóa học, học viên sẽ làm sai đồ án. Chi phí sửa sai vô cùng lớn.
+              </td>
+              <td>
+                <span style="color: var(--accent-rose); font-weight: 700;">❌ LOẠI</span><br>
+                <span style="font-size: 13px; color: var(--text-dim);">Cost of error không chấp nhận được</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <span style="color: var(--accent-amber);">Ứng viên 2</span><br>
+                Lọc Bằng Discord Search
+              </td>
+              <td>TA sử dụng cú pháp tìm kiếm có sẵn của Discord: <code>has:link</code>, <code>in:channel</code>, <code>before:time</code> để rà soát.</td>
+              <td>
+                <strong style="color: var(--accent-amber);">Impact cực thấp:</strong> 0đ token nhưng không tự động hóa. TA vẫn phải tự nhớ thao tác, tốn 15 phút và trả về dữ liệu thô không có tóm tắt.
+              </td>
+              <td>
+                <span style="color: var(--accent-amber); font-weight: 700;">❌ LOẠI</span><br>
+                <span style="font-size: 13px; color: var(--text-dim);">Không giải quyết triệt để nỗi đau</span>
+              </td>
+            </tr>
+
+            <tr class="winner">
+              <td>
+                <span style="color: var(--primary);">Ứng viên 3</span><br>
+                AI Lọc & Báo Cáo + Link (Augment)
+              </td>
+              <td>AI quét tin nhắn chưa có reply &gt; 4h, phân loại câu hỏi, tóm tắt 1 câu và gắn trực tiếp link Discord cho TA click.</td>
+              <td>
+                <strong style="color: var(--accent-green);">Tối ưu hoàn hảo:</strong> Tiết kiệm <strong>90% thời gian</strong> (từ 15' xuống 1-2'). Giữ nguyên tắc <em>Human-in-the-loop</em>: TA giữ quyền quyết định câu trả lời.
+              </td>
+              <td>
+                <span style="color: var(--accent-green); font-weight: 700;">✅ CHỌN</span><br>
+                <span style="font-size: 13px; color: var(--primary);">Impact cao + An toàn 100%</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Summary Banner -->
+        <div style="margin-top: 24px; background: rgba(56, 189, 248, 0.06); border: 1px solid var(--border-highlight); border-radius: 14px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 16px; color: #e2e8f0;">
+            💡 <strong>Nguyên tắc cốt lõi:</strong> Chuyển trạng thái làm việc của TA từ <em>"Bị động đi tìm việc trên hàng chục kênh"</em> sang <em>"Bản tin tổng hợp chủ động mang việc đến tận tay"</em>.
+          </div>
+          <div style="font-size: 15px; font-weight: 700; color: var(--accent-green); white-space: nowrap;">
+            Giảm thời gian xử lý từ 15' → 1.5'
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span class="team-badge">K4-3B-E403-sunset01</span>
+          <span>•</span>
+          <span>Bảng Impact & Quyết Định Chọn</span>
+        </div>
+        <div class="footer-right">
+          <span>02-guide.md §5.1 Compliant</span>
+          <span>•</span>
+          <span>2/6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SLIDE 3: GIẢI PHÁP & DEMO LIVE ================= -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div>
+          <div class="meta-badges">
+            <span class="badge-track">Zone B2 · Lát Cắt Trải Nghiệm</span>
+            <span class="badge-time">2 PHÚT (DEMO TRỰC TIẾP)</span>
+          </div>
+          <div class="slide-title-group">
+            <h1>Giải Pháp & Demo Live: Lát Cắt Một Câu</h1>
+            <p>Thiết kế Augment — Demo 1 Case Chuẩn + 1 Case Chỗ Khó (Edge Case Đã Xử Lý)</p>
+          </div>
+        </div>
+        <div class="slide-number-box">
+          <span class="slide-num">03</span>
+          <span class="rule-pill">✓ Case lỗi được đánh giá cao</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Col 1: Architecture & Slice -->
+          <div class="card">
+            <div class="card-title">
+              <span class="icon icon-blue">⚡</span>
+              Lát Cắt 1 Câu & Triết Lý Augment
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.03); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 10px; margin-bottom: 20px;">
+              <div style="font-size: 13px; color: var(--primary); font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Lát cắt một câu (1 User · 1 Việc · 1 AI Decision · 1 Kết quả)</div>
+              <p style="font-size: 17px; line-height: 1.5; color: #fff;">
+                Một <strong>TA xem bản tin cuối ngày</strong> · muốn <strong>tìm câu hỏi chưa ai trả lời</strong> · AI quyết định <strong>lọc các câu hỏi tồn đọng &gt; 4 giờ và tóm tắt chúng</strong> · kết quả là một <strong>danh sách gọn gàng có gắn link trực tiếp</strong> để TA click vào trả lời.
+              </p>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <h4 style="font-size: 15px; color: #cbd5e1; margin-bottom: 8px;">Nguyên tắc thiết kế HAX/PAIR áp dụng:</h4>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: var(--text-muted);">
+                <li><strong style="color: var(--primary);">G1 (Minh bạch):</strong> Ghi rõ cảnh báo "Bản tin do AI lọc, có thể có độ trễ/sai sót".</li>
+                <li><strong style="color: var(--primary);">G4 (Phù hợp ngữ cảnh):</strong> Chỉ gom tin có nhãn <code>is_question: true</code>, bỏ qua tin tán gẫu.</li>
+                <li><strong style="color: var(--primary);">G9 (Hỗ trợ sửa lỗi):</strong> TA có thể thả react hoặc ấn tick "Đã xử lý" trực tiếp.</li>
+                <li><strong style="color: var(--primary);">G11 (Minh bạch lý do):</strong> Hiển thị rõ tag "Tồn đọng 5h", "Tồn đọng 19h" để TA hiểu độ ưu tiên.</li>
+              </ul>
+            </div>
+
+            <div class="code-box">
+              <span style="color: #64748b;">// Output schema chuẩn hóa từ evaluate_cp3.py</span><br>
+              {<br>
+              &nbsp;&nbsp;<span style="color: #f59e0b;">"is_question"</span>: <span style="color: #10b981;">true</span>,<br>
+              &nbsp;&nbsp;<span style="color: #f59e0b;">"summary"</span>: <span style="color: #e2e8f0;">"Hỏi cách cấu hình GitHub Copilot cho VS Code"</span>,<br>
+              &nbsp;&nbsp;<span style="color: #f59e0b;">"discord_link"</span>: <span style="color: #38bdf8;">"https://discord.com/channels/123/456/789"</span><br>
+              }
+            </div>
+          </div>
+
+          <!-- Col 2: Demo Plan (1 Normal + 1 Hard Case) -->
+          <div class="card highlight">
+            <div class="card-title">
+              <span class="icon icon-green">🎯</span>
+              Kịch Bản Demo Trực Tiếp Trên Dashboard
+            </div>
+
+            <!-- Normal Case -->
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 14px; padding: 18px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="color: var(--accent-green); font-size: 16px;">CASE 1: HAPPY PATH (Câu hỏi chuẩn)</strong>
+                <span class="badge-time">ID 2 · Golden Set</span>
+              </div>
+              <p style="font-size: 15px; color: #cbd5e1; margin-bottom: 8px;">
+                <em>"Mọi người cho em hỏi làm sao để setup cái Github Copilot ạ"</em>
+              </p>
+              <div style="font-size: 14px; color: var(--text-muted);">
+                ➔ <strong>AI xử lý:</strong> Gán <code>is_question: true</code>, tóm tắt súc tích, hiển thị tag <em>"Tồn đọng 5 tiếng"</em>, TA bấm 1 chạm nhảy thẳng đến tin nhắn học viên để trả lời.
+              </div>
+            </div>
+
+            <!-- Hard Case -->
+            <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.2); border-radius: 14px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="color: var(--accent-rose); font-size: 16px;">CASE 2: CHỖ KHÓ (Bẫy từ khóa gây nhiễu)</strong>
+                <span class="badge-time">ID 1 & ID 13 · Golden Set</span>
+              </div>
+              <p style="font-size: 15px; color: #cbd5e1; margin-bottom: 8px;">
+                <em>"Câu hỏi này để hôm ws chủ nhật trao đổi luon nhé"</em> (Chứa chữ "câu hỏi")
+              </p>
+              <div style="font-size: 14px; color: var(--text-muted);">
+                ➔ <strong>Thử thách:</strong> Bot baseline bị lừa tưởng là câu hỏi bài tập.<br>
+                ➔ <strong>AI đã fix (Few-shot):</strong> Phân loại chính xác <code>is_question: false</code>, loại khỏi danh sách báo cáo, không gây loãng thời gian của TA.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span class="team-badge">K4-3B-E403-sunset01</span>
+          <span>•</span>
+          <span>Trình Diễn Demo Trực Tiếp</span>
+        </div>
+        <div class="footer-right">
+          <span>02-guide.md §5.1 Compliant</span>
+          <span>•</span>
+          <span>3/6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SLIDE 4: KẾT QUẢ ĐO & QUALITY BAR ================= -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <div>
+          <div class="meta-badges">
+            <span class="badge-track">Zone B2 · Đánh Giá Thực Nghiệm</span>
+            <span class="badge-time">45 GIÂY</span>
+          </div>
+          <div class="slide-title-group">
+            <h1>Kết Quả Đo: Golden Set & Xử Lý Failure Đáng Kể</h1>
+            <p>Đối chiếu Quality Bar đã chốt tại CP4 — Đạt 100% nhờ Kỹ thuật Few-shot Prompting</p>
+          </div>
+        </div>
+        <div class="slide-number-box">
+          <span class="slide-num">04</span>
+          <span class="rule-pill">✓ Đối chiếu Quality Bar đã chốt</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Col 1: Metrics vs Bar -->
+          <div class="card highlight">
+            <div class="card-title">
+              <span class="icon icon-green">📊</span>
+              Chỉ Số Đo Lường vs Quality Bar Đã Chốt
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 20px;">
+                <div style="font-size: 13px; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">Quality Bar Cam Kết (CP4)</div>
+                <div style="font-size: 40px; font-weight: 800; font-family: 'JetBrains Mono'; color: var(--text-muted); margin: 6px 0;">≥ 90%</div>
+                <div style="font-size: 14px; color: var(--text-dim);">Tối thiểu 18/20 câu đúng, không crash JSON.</div>
+              </div>
+
+              <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; padding: 20px;">
+                <div style="font-size: 13px; color: var(--accent-green); text-transform: uppercase; font-weight: 700;">Kết Quả Thực Tế (CP3)</div>
+                <div style="font-size: 40px; font-weight: 800; font-family: 'JetBrains Mono'; color: var(--accent-green); margin: 6px 0;">100%</div>
+                <div style="font-size: 14px; color: #a7f3d0;">20/20 câu chính xác hoàn hảo (Run 1).</div>
+              </div>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 15px; color: var(--text-main);">
+              <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); height: 44px;">
+                <td style="color: var(--text-muted);">Quy mô Golden Set</td>
+                <td style="text-align: right; font-weight: 700;">20 test cases đầy đủ 4 lớp chỗ khó</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); height: 44px;">
+                <td style="color: var(--text-muted);">Model sử dụng</td>
+                <td style="text-align: right; font-weight: 700; color: var(--primary);">OpenAI GPT-4o-mini (Few-shot)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); height: 44px;">
+                <td style="color: var(--text-muted);">Chi phí vận hành</td>
+                <td style="text-align: right; font-weight: 700; color: var(--accent-green);">~0.00015$ / lượt tổng hợp bản tin</td>
+              </tr>
+              <tr style="height: 44px;">
+                <td style="color: var(--text-muted);">Độ phủ 4 lớp chỗ khó</td>
+                <td style="text-align: right; font-weight: 700; color: var(--accent-green);">100% (Facts, Ambiguity, Out-of-scope, Domain)</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Col 2: The Significant Failure Fixed -->
+          <div class="card">
+            <div class="card-title">
+              <span class="icon icon-rose">🛠️</span>
+              1 Failure Đáng Kể Nhất & Cách Đã Xử Lý
+            </div>
+
+            <div style="margin-bottom: 18px;">
+              <h4 style="font-size: 16px; color: var(--accent-rose); margin-bottom: 6px;">Sự cố ở bản chạy Baseline (90% accuracy):</h4>
+              <p style="font-size: 15px; color: #cbd5e1; line-height: 1.5;">
+                AI bắt nhầm câu thảo luận nội bộ thành câu hỏi bài tập vì thấy từ "câu hỏi" (ID 1: <em>"Câu hỏi này để hôm ws chủ nhật trao đổi luon nhé"</em>) hoặc từ "hỏi" trong tìm nhóm (ID 13: <em>"Có ai lập team làm hackathon chưa cho mình join với"</em>).
+              </p>
+            </div>
+
+            <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+              <h4 style="font-size: 16px; color: var(--primary); margin-bottom: 6px;">Giải pháp kỹ thuật (Prompt Tuning):</h4>
+              <p style="font-size: 15px; color: #e2e8f0; line-height: 1.5;">
+                Đưa 3 cặp mẫu <strong>Few-shot Counter-examples</strong> trực tiếp vào prompt của <code>evaluate_cp3.py</code>, quy định rõ: câu hẹn giải đáp sau hoặc tìm team là <code>is_question: false</code>.
+              </p>
+            </div>
+
+            <div style="font-size: 15px; color: var(--accent-green); font-weight: 600; display: flex; align-items: center; gap: 8px;">
+              <span>✅ Kết quả:</span> Tỷ lệ phân loại chính xác tăng từ 90% (18/20) lên <strong>100% (20/20)</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span class="team-badge">K4-3B-E403-sunset01</span>
+          <span>•</span>
+          <span>Báo Cáo Đánh Giá Chất Lượng</span>
+        </div>
+        <div class="footer-right">
+          <span>02-guide.md §5.1 Compliant</span>
+          <span>•</span>
+          <span>4/6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SLIDE 5: USER THẬT NÓI GÌ ================= -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div>
+          <div class="meta-badges">
+            <span class="badge-track">Zone B2 · Validation Thực Nghiệm</span>
+            <span class="badge-time">45 GIÂY</span>
+          </div>
+          <div class="slide-title-group">
+            <h1>User Thật Nói Gì: Phản Hồi Từ Teaching Assistants</h1>
+            <p>Khảo sát & Thử nghiệm trực tiếp với 3 Willing Users đã khai báo từ CP1</p>
+          </div>
+        </div>
+        <div class="slide-number-box">
+          <span class="slide-num">05</span>
+          <span class="rule-pill">✓ Trích dẫn nguyên văn có nguồn</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Quote 1 -->
+          <div class="card">
+            <div class="quote-card" style="border-left-color: var(--primary);">
+              <div class="quote-text">
+                "Trước đây tin nhắn bị trôi ở các kênh chat chung rất khó tìm. Có link bấm thẳng nhảy ngay đến đúng tin nhắn gốc giúp mình tiết kiệm ít nhất 15 phút mỗi tối và không lo bỏ quên ai."
+              </div>
+              <div class="quote-author">
+                <span>👤 Trần Thanh Thái</span>
+                <span class="quote-role">• TA Discord K4</span>
+              </div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-dim); line-height: 1.4;">
+              <strong>Quan sát thực tế:</strong> Thao tác xử lý 1 câu hỏi rút ngắn từ 4 bước (tìm kênh ➔ cuộn tin ➔ đọc ngữ cảnh ➔ gõ rep) xuống còn 1 cú click link.
+            </div>
+          </div>
+
+          <!-- Quote 2 -->
+          <div class="card">
+            <div class="quote-card" style="border-left-color: var(--accent-green);">
+              <div class="quote-text">
+                "Bản tin cũ của bot toàn chữ rác và lẫn tin nhắn tán gẫu. Bản tin mới lọc rất sạch, tóm tắt đúng trọng tâm nên mình nhìn vào là biết học viên đang kẹt ở phần nào để vào hỗ trợ ngay."
+              </div>
+              <div class="quote-author">
+                <span>👤 Lê Thị Thu</span>
+                <span class="quote-role">• TA Hỗ trợ học viên</span>
+              </div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-dim); line-height: 1.4;">
+              <strong>Quan sát thực tế:</strong> Không còn hiện tượng TA bỏ qua bản tin do lỗi font hay tóm tắt cụt ngủn như trong file <code>k4_daily_reports.md</code>.
+            </div>
+          </div>
+
+          <!-- Quote 3 -->
+          <div class="card">
+            <div class="quote-card" style="border-left-color: var(--accent-amber);">
+              <div class="quote-text">
+                "Rất thích tag thời gian 'Tồn đọng 5h', 'Tồn đọng 19h'. Nó giúp mình và các TA khác biết ngay câu nào đang cấp bách nhất để chia nhau xử lý trước."
+              </div>
+              <div class="quote-author">
+                <span>👤 Nguyễn Công Duẩn</span>
+                <span class="quote-role">• TA Kỹ thuật</span>
+              </div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-dim); line-height: 1.4;">
+              <strong>Thay đổi đã làm theo góp ý:</strong> Bổ sung tag thời gian trực quan (Pair G11) và bộ lọc phân loại "Trên 4 giờ" vào giao diện báo cáo.
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation Summary Table -->
+        <div style="margin-top: 24px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-card); border-radius: 14px; padding: 18px 24px; display: flex; justify-content: space-around; align-items: center;">
+          <div style="text-align: center;">
+            <div style="font-size: 32px; font-weight: 800; color: var(--accent-green); font-family: 'JetBrains Mono';">3 / 3</div>
+            <div style="font-size: 14px; color: var(--text-muted);">TA sẵn sàng sử dụng hàng ngày</div>
+          </div>
+          <div style="width: 1px; height: 40px; background: rgba(255, 255, 255, 0.1);"></div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; font-weight: 800; color: var(--primary); font-family: 'JetBrains Mono';">100%</div>
+            <div style="font-size: 14px; color: var(--text-muted);">Đồng ý bản tin mới giải quyết được tình trạng trôi tin</div>
+          </div>
+          <div style="width: 1px; height: 40px; background: rgba(255, 255, 255, 0.1);"></div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; font-weight: 800; color: var(--accent-amber); font-family: 'JetBrains Mono';">0 Lỗi</div>
+            <div style="font-size: 14px; color: var(--text-muted);">Không xuất hiện chữ rác hay format vỡ</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span class="team-badge">K4-3B-E403-sunset01</span>
+          <span>•</span>
+          <span>Phản Hồi User Thật & Vòng Validation</span>
+        </div>
+        <div class="footer-right">
+          <span>02-guide.md §5.1 Compliant</span>
+          <span>•</span>
+          <span>5/6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SLIDE 6: NẾU CÓ THÊM 1 TUẦN ================= -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <div>
+          <div class="meta-badges">
+            <span class="badge-track">Zone B2 · Định Hướng Tương Lai</span>
+            <span class="badge-time">30 GIÂY</span>
+          </div>
+          <div class="slide-title-group">
+            <h1>Nếu Có Thêm 1 Tuần: 3 Việc Ưu Tiên & Bài Học Lớn</h1>
+            <p>Trỏ thẳng về feedback thực tế và các kịch bản khó chưa xử lý triệt để</p>
+          </div>
+        </div>
+        <div class="slide-number-box">
+          <span class="slide-num">06</span>
+          <span class="rule-pill">✓ Tránh roadmap 10 mục lan man</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Col 1: 3 Priorities -->
+          <div class="card">
+            <div class="card-title">
+              <span class="icon icon-purple">🚀</span>
+              3 Việc Ưu Tiên Hàng Đầu (Trỏ về Failure)
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 16px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                  <span style="background: var(--primary); color: #000; font-size: 12px; font-weight: 800; padding: 2px 8px; border-radius: 4px;">ƯU TIÊN 1</span>
+                  <strong style="color: #fff; font-size: 16px;">Discord Webhook Auto-publish (Cron)</strong>
+                </div>
+                <p style="font-size: 14px; color: var(--text-muted);">
+                  Cài đặt trigger tự động quét ngầm và bắn thông báo vào kênh kín <code>#ta-internal</code> đúng 22:00 hàng ngày thay vì cần thao tác bấm tạo báo cáo thủ công.
+                </p>
+              </div>
+
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 16px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                  <span style="background: var(--accent-amber); color: #000; font-size: 12px; font-weight: 800; padding: 2px 8px; border-radius: 4px;">ƯU TIÊN 2</span>
+                  <strong style="color: #fff; font-size: 16px;">OCR Đa Phương Thức (Giải Quyết KB2)</strong>
+                </div>
+                <p style="font-size: 14px; color: var(--text-muted);">
+                  Tích hợp Multimodal Vision (GPT-4o-mini Vision) để đọc text và mã lỗi từ ảnh chụp màn hình do học viên gửi lên (hiện tại hệ thống mới chỉ đọc text thuần).
+                </p>
+              </div>
+
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 16px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                  <span style="background: var(--accent-green); color: #000; font-size: 12px; font-weight: 800; padding: 2px 8px; border-radius: 4px;">ƯU TIÊN 3</span>
+                  <strong style="color: #fff; font-size: 16px;">Tránh Xung Đột Xử Lý (Realtime Lock)</strong>
+                </div>
+                <p style="font-size: 14px; color: var(--text-muted);">
+                  Hiển thị trạng thái "TA A đang vào trả lời" theo thời gian thực để tránh việc 2 TAs cùng nhảy vào rep 1 học viên cùng một lúc.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: Biggest Lesson Learned -->
+          <div class="card highlight" style="justify-content: center;">
+            <div class="card-title" style="margin-bottom: 24px;">
+              <span class="icon icon-amber">💡</span>
+              Bài Học Lớn Nhất Của Nhóm K4-3B
+            </div>
+
+            <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px 28px; position: relative;">
+              <div style="font-size: 60px; color: var(--primary); font-family: serif; position: absolute; top: -10px; left: 16px; opacity: 0.3;">“</div>
+              <p style="font-size: 22px; line-height: 1.6; font-weight: 600; color: #fff; position: relative; z-index: 1;">
+                Đừng cố ép AI làm tất cả (<span style="color: var(--accent-rose);">Automate</span>). Thiết kế AI đóng vai trò trợ lực (<span style="color: var(--primary);">Augment</span>) đúng vào điểm nghẽn của quy trình mới tạo ra một sản phẩm an toàn, tin cậy và mang lại giá trị tức thì cho con người.
+              </p>
+              <div style="font-size: 60px; color: var(--primary); font-family: serif; position: absolute; bottom: -30px; right: 20px; opacity: 0.3;">”</div>
+            </div>
+
+            <div style="margin-top: 28px; text-align: center; color: var(--text-muted); font-size: 16px;">
+              🎯 <em>"Không để bất kỳ học viên nào bị bỏ lại phía sau."</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span class="team-badge">K4-3B-E403-sunset01</span>
+          <span>•</span>
+          <span>Kế Hoạch Mở Rộng & Bài Học Lớn</span>
+        </div>
+        <div class="footer-right">
+          <span>02-guide.md §5.1 Compliant</span>
+          <span>•</span>
+          <span>6/6</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 6;
+
+    function updateSlide() {
+      const el = document.getElementById(`slide-${currentSlide}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('slide-indicator').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      }
+    });
+  </script>
+</body>
+</html>
