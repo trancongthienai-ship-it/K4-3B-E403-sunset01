@@ -75,10 +75,10 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 
 ## §8. Phân công & kế hoạch
 - **Phân công có tên**:
-  - Trần Thanh Thái (2A202602454) — Khảo sát TA, phân tích data lỗi bot & User test
-  - Cao Đức Hiếu (2A202602701) — Thiết kế prompt phân loại & tóm tắt
-  - Dương Hữu Đạt (2A202602544) — Code tích hợp model sinh báo cáo (Làm file `evaluate_cp3.py`)
-  - Trần Công Thiện (2A202602579) — Làm Spec, review test cases & Demo
+  - Trần Thanh Thái (2A202602454) — Phỏng vấn TA xác định pain point. Khảo sát log Discord thu thập log lỗi bot cũ, trực tiếp điều phối vòng User Test (CP5)
+  - Cao Đức Hiếu (2A202602701) — Thiết kế và tối ưu Few-shot prompt giúp AI phân loại câu hỏi chuẩn xác, cân bằng giữa chi tiết và chi phí token
+  - Dương Hữu Đạt (2A202602544) — Viết script Python (`evaluate_cp3.py`) tích hợp OpenAI API (JSON mode), xử lý dữ liệu và tự động đánh giá kết quả (CP3)
+  - Trần Công Thiện (2A202602579) — Quản lý tiến độ, soạn AI Spec (chốt 4 lớp lỗi & HAX). Review bộ test (Golden Set) và chuẩn bị slide/video Demo (CP6)
 - **Willing users + kế hoạch vòng validation**: 
   - `moizdau@gmail.com`, `thunmt2004@gmail.com`, `congduan2554@gmail.com`.
   - Kế hoạch: LAB 6 sẽ nhờ 3 TAs này trực tiếp dry-run bằng cách cấp quyền chạy thử bản tin sinh ra từ 20 case giả lập để xem họ có hài lòng với cấu trúc báo cáo không.

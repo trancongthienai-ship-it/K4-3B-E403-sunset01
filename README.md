@@ -4,14 +4,14 @@
 
 ## 👥 Thành viên nhóm & Phân công vai trò
 
-**Lớp:** 3B · **Phòng:** ____ · **Cụm:** ____ · **Track:** ____
+**Lớp:** 3B · **Phòng:** E403 · **Cụm:** 5 · **Track:** S
 
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+| Trần Thanh Thái | 2A202602454 | Khảo sát & Phân tích | Phỏng vấn TA xác định pain point. Khảo sát log Discord thu thập log lỗi bot cũ, trực tiếp điều phối vòng User Test (CP5) |
+| Cao Đức Hiếu | 2A202602701 | Kỹ sư Prompt | Thiết kế và tối ưu Few-shot prompt giúp AI phân loại câu hỏi chuẩn xác, cân bằng giữa chi tiết và chi phí token |
+| Dương Hữu Đạt | 2A202602544 | Lập trình viên | Viết script Python (evaluate_cp3.py) tích hợp OpenAI API (JSON mode), xử lý dữ liệu và tự động đánh giá kết quả (CP3) |
+| Trần Công Thiện | 2A202602579 | Lead / QA | Quản lý tiến độ, soạn AI Spec (chốt 4 lớp lỗi & HAX). Review bộ test (Golden Set) và chuẩn bị slide/video Demo (CP6) |
 
 > Nhóm copy nguyên file README này về repo của mình, rồi điền bảng trên. Cột **Phần việc đảm nhiệm** ghi càng cụ thể càng tốt.
 
