@@ -1,0 +1,122 @@
+[
+    {
+        "id": "1",
+        "content": "Câu hỏi này để hôm ws chủ nhật trao đổi luon nhé",
+        "expected_is_question": false,
+        "reason": "Chỉ là một câu hẹn trao đổi, không phải câu hỏi cần hỗ trợ ngay."
+    },
+    {
+        "id": "2",
+        "content": "Để BTC và các Lab Coach thuận tiện trong việc nhận diện, quản lý học viên, mọi người vui lòng đổi tên theo cú pháp...",
+        "expected_is_question": false,
+        "reason": "Đây là thông báo của BTC."
+    },
+    {
+        "id": "3",
+        "content": "Em đang cần hỗ trợ về vấn đề giấy tờ gấp thì em liên lạc đến bộ phận nào ạ",
+        "expected_is_question": true,
+        "reason": "Học viên đang gặp vấn đề gấp cần TA/BTC hỗ trợ."
+    },
+    {
+        "id": "4",
+        "content": "Mọi người cho em hỏi làm sao để setup cái Github Copilot ạ, nó cứ báo lỗi connection timeout",
+        "expected_is_question": true,
+        "reason": "Học viên gặp lỗi kỹ thuật cần hướng dẫn."
+    },
+    {
+        "id": "5",
+        "content": "Dạ vâng em cảm ơn ạ",
+        "expected_is_question": false,
+        "reason": "Câu cảm ơn thông thường."
+    },
+    {
+        "id": "6",
+        "content": "Xin hỗ trợ gia nhập nhóm sau hạn đăng ký vì em bị ốm mấy ngày qua",
+        "expected_is_question": true,
+        "reason": "Yêu cầu hỗ trợ đặc biệt cần BTC giải quyết."
+    },
+    {
+        "id": "7",
+        "content": "Cho em hỏi file record buổi 1 nằm ở đâu vậy ạ?",
+        "expected_is_question": true,
+        "reason": "Câu hỏi tìm kiếm tài liệu."
+    },
+    {
+        "id": "8",
+        "content": "Chào mọi người, chúc một ngày tốt lành",
+        "expected_is_question": false,
+        "reason": "Lời chào, không có thông tin cần giải quyết."
+    },
+    {
+        "id": "9",
+        "content": "Lab coach ơi cho em hỏi câu 3 bài tập về nhà phần phân tích dữ liệu làm sao ạ?",
+        "expected_is_question": true,
+        "reason": "Hỏi bài tập, cần TA vào hướng dẫn."
+    },
+    {
+        "id": "10",
+        "content": "Mình đã nhận được email rồi nhé",
+        "expected_is_question": false,
+        "reason": "Xác nhận thông tin."
+    },
+    {
+        "id": "11",
+        "content": "Lỗi 'module not found' khi chạy npm start, có ai biết fix không ạ?",
+        "expected_is_question": true,
+        "reason": "Hỏi lỗi code."
+    },
+    {
+        "id": "12",
+        "content": "Ok bạn nha",
+        "expected_is_question": false,
+        "reason": "Chat phiếm."
+    },
+    {
+        "id": "13",
+        "content": "Có ai lập team làm hackathon chưa cho mình join với, mình làm BE",
+        "expected_is_question": false,
+        "reason": "Tìm nhóm nội bộ giữa các học viên, không phải câu hỏi dành cho TA."
+    },
+    {
+        "id": "14",
+        "content": "Link nộp bài CP1 ở đâu vậy BTC?",
+        "expected_is_question": true,
+        "reason": "Hỏi thông tin quan trọng từ BTC."
+    },
+    {
+        "id": "15",
+        "content": "Tuyệt vời quá lớp mình ơi",
+        "expected_is_question": false,
+        "reason": "Bày tỏ cảm xúc."
+    },
+    {
+        "id": "16",
+        "content": "Mọi người ơi cho hỏi thứ 7 này có học bù không ạ?",
+        "expected_is_question": true,
+        "reason": "Hỏi lịch học."
+    },
+    {
+        "id": "17",
+        "content": "Mình xem lại video bài giảng rồi, cám ơn btc",
+        "expected_is_question": false,
+        "reason": "Feedback, không cần phản hồi."
+    },
+    {
+        "id": "18",
+        "content": "Làm sao để biết mình đã được chấm điểm chuyên cần tuần trước hay chưa ạ?",
+        "expected_is_question": true,
+        "reason": "Hỏi về điểm số."
+    },
+    {
+        "id": "19",
+        "content": "Đã xong bài tập 1, chuẩn bị làm bài 2",
+        "expected_is_question": false,
+        "reason": "Cập nhật tiến độ cá nhân."
+    },
+    {
+        "id": "20",
+        "content": "Cho e hỏi nộp muộn deadline 1 tiếng do cúp điện có bị trừ điểm ko ạ?",
+        "expected_is_question": true,
+        "reason": "Hỏi chính sách, cần BTC trả lời."
+    }
+]
