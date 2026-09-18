@@ -20,11 +20,16 @@ def classify_message(content):
     Gọi OpenAI API để phân loại tin nhắn.
     """
     prompt = f"""Bạn là một trợ lý AI phân tích tin nhắn Discord của lớp học.
-Nhiệm vụ của bạn là đọc tin nhắn sau đây và xác định xem nó CÓ PHẢI là một câu hỏi hoặc yêu cầu cần Teaching Assistant (TA) hoặc Ban tổ chức hỗ trợ giải quyết hay không.
+Nhiệm vụ của bạn là xác định xem tin nhắn có cần Teaching Assistant (TA) hoặc Ban tổ chức hỗ trợ giải quyết hay không.
 
-Tiêu chí:
-- Lời chào, tán gẫu, báo cáo tiến độ, câu cảm ơn, thông báo của BTC -> KHÔNG cần hỗ trợ (is_question: false).
-- Câu hỏi bài tập, hỏi lỗi kỹ thuật, hỏi thủ tục, xin hỗ trợ riêng -> CẦN hỗ trợ (is_question: true).
+Quy tắc:
+- is_question: true -> Nếu là câu hỏi bài tập, lỗi kỹ thuật, hỏi thủ tục, xin hỗ trợ từ BTC/TA.
+- is_question: false -> Nếu là chào hỏi, tán gẫu, cảm ơn, thông báo của BTC, hẹn trao đổi nội bộ, tìm nhóm, báo cáo tiến độ cá nhân.
+
+Ví dụ tham khảo:
+- "Mọi người cho em hỏi làm sao để setup cái Github Copilot ạ" -> CẦN hỗ trợ (is_question: true)
+- "Câu hỏi này để hôm ws chủ nhật trao đổi luon nhé" -> KHÔNG cần hỗ trợ (is_question: false)
+- "Có ai lập team làm hackathon chưa cho mình join với" -> KHÔNG cần hỗ trợ (is_question: false)
 
 Tin nhắn: "{content}"
 
